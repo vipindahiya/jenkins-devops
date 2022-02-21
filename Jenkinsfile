@@ -29,6 +29,27 @@ pipeline {
 				sh "mvn failsafe:integration-test failsafe:verify"
 			}
 		}
+		stage('package'){
+			steps{
+				sh "mvn package -DskipTests"
+			}
+		}
+		stage('Build Docker image'){
+			steps{
+				script{
+					dockerimage = docker.Build("vipindahiya/devops1:$env.BUILD_TAG")
+				}				
+			}
+		}
+		stage('Push Docker image'){
+			steps{
+				script{
+					docker.withRegistry('','dockerhub')
+					dockerimage.push();
+					dockerimage.push('latest')
+				}				
+			}
+		}		
 	}
 	post{
 		always{
