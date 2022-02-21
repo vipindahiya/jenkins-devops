@@ -21,8 +21,8 @@ pipeline {
 		always{
 			echo "Always"
 		}
-		sucess{
-			echo "Sucess"
+		success{
+			echo "Success"
 		}
 		failure{
 			echo "Failed"
