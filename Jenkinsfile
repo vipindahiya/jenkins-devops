@@ -37,16 +37,17 @@ pipeline {
 		stage('Build Docker image'){
 			steps{
 				script{
-					dockerimage = docker.Build("vipindahiya/devops1:$env.BUILD_TAG")
+					dockerimage = docker.Build("vipindahiya89/jenkins-devops:$env.BUILD_TAG")
 				}				
 			}
 		}
 		stage('Push Docker image'){
 			steps{
 				script{
-					docker.withRegistry('','dockerhub')
-					dockerimage.push();
-					dockerimage.push('latest')
+					docker.withRegistry('','dockerhub'){
+						dockerimage.push();
+						dockerimage.push('latest')
+					}
 				}				
 			}
 		}		
